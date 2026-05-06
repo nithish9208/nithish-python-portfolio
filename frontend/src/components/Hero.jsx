@@ -90,14 +90,16 @@ const Hero = () => {
                 <ChevronRight className="group-hover:translate-x-1 transition-transform" />
               </motion.button>
 
-              <motion.button
+              <motion.a
+                href="resume.pdf"
+                download="Nithishkumar_K_Python_Resume.pdf"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="flex items-center gap-2 bg-slate-800 hover:bg-slate-700 text-white px-8 py-4 rounded-2xl font-bold transition-all border border-slate-700"
               >
                 Download Resume
                 <Download size={20} />
-              </motion.button>
+              </motion.a>
             </div>
           </motion.div>
 
