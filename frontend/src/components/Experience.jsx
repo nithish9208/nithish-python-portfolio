@@ -2,19 +2,38 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Briefcase, Calendar, CheckCircle2 } from 'lucide-react';
 
+const FALLBACK_EXPERIENCE = [
+  {
+    "role": "Python & Data Operations Intern",
+    "company": "RR IT Solutions",
+    "period": "2023 - Present",
+    "description": "Spearheading automation initiatives and data pipeline optimization for client datasets.",
+    "highlights": [
+      "Developed automation scripts reducing manual data entry by 70%",
+      "Optimized SQL queries for reporting workflows, improving performance by 40%",
+      "Implemented Python-based data cleaning pipelines for messy CSV datasets",
+      "Automated reporting workflows using Pandas and Matplotlib"
+    ]
+  }
+];
+
 const Experience = () => {
   const [experiences, setExperiences] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetch('http://127.0.0.1:8000/api/experience')
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) throw new Error('Backend unavailable');
+        return res.json();
+      })
       .then(data => {
         setExperiences(data);
         setLoading(false);
       })
       .catch(err => {
-        console.error("Failed to fetch experience data:", err);
+        console.warn("Failed to fetch experience data, using fallback static data:", err);
+        setExperiences(FALLBACK_EXPERIENCE);
         setLoading(false);
       });
   }, []);

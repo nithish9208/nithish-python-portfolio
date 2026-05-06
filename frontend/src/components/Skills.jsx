@@ -1,19 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
+const FALLBACK_SKILLS = [
+  { "name": "Python", "level": 90, "color": "bg-cyan-500", "icon": "python" },
+  { "name": "SQL (PostgreSQL/MySQL)", "level": 85, "color": "bg-blue-500", "icon": "postgresql" },
+  { "name": "Pandas & NumPy", "level": 80, "color": "bg-emerald-500", "icon": "pandas" },
+  { "name": "Git", "level": 75, "color": "bg-orange-500", "icon": "git" },
+  { "name": "Excel Automation", "level": 90, "color": "bg-green-600", "icon": "excel" },
+];
+
 const Skills = () => {
   const [skills, setSkills] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetch('http://127.0.0.1:8000/api/skills')
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) throw new Error('Backend unavailable');
+        return res.json();
+      })
       .then(data => {
         setSkills(data);
         setLoading(false);
       })
       .catch(err => {
-        console.error("Failed to fetch skills data:", err);
+        console.warn("Failed to fetch skills data, using fallback static data:", err);
+        setSkills(FALLBACK_SKILLS);
         setLoading(false);
       });
   }, []);

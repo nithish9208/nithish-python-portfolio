@@ -20,6 +20,57 @@ const SIMULATION_MAP = {
   StudentSim
 };
 
+const FALLBACK_PROJECTS = [
+  {
+    "id": "attendance",
+    "title": "Employee Attendance Management",
+    "category": "Automation / Backend",
+    "description": "A robust system for tracking employee check-ins, generating attendance reports, and managing admin controls. Built with security and scalability in mind.",
+    "icon": "Server",
+    "iconColor": "text-indigo-400",
+    "tags": ["Python", "SQLite", "Report Generation"],
+    "simulationId": "AttendanceSim",
+    "repo": "#",
+    "demo": "#"
+  },
+  {
+    "id": "csv",
+    "title": "CSV Data Automation Tool",
+    "category": "Data Engineering",
+    "description": "Automated pipeline for cleaning, normalizing, and deduplicating large CSV datasets. Features drag-and-drop processing and intelligent duplicate detection.",
+    "icon": "FileText",
+    "iconColor": "text-emerald-400",
+    "tags": ["Pandas", "NumPy", "Data Cleaning"],
+    "simulationId": "CSVSim",
+    "repo": "#",
+    "demo": "#"
+  },
+  {
+    "id": "analytics",
+    "title": "Sales Data Analytics Dashboard",
+    "category": "Data Visualization",
+    "description": "Interactive visualization tool for sales performance metrics, region-wise analytics, and revenue forecasting using modern data stacks.",
+    "icon": "BarChart3",
+    "iconColor": "text-blue-400",
+    "tags": ["Python", "Matplotlib", "Seaborn"],
+    "simulationId": "AnalyticsSim",
+    "repo": "#",
+    "demo": "#"
+  },
+  {
+    "id": "student",
+    "title": "Student Record Management",
+    "category": "Database / CRUD",
+    "description": "A complete CRUD application for maintaining student databases, calculating grade metrics, and searching records efficiently.",
+    "icon": "Database",
+    "iconColor": "text-orange-400",
+    "tags": ["Python", "MySQL", "GUI Development"],
+    "simulationId": "StudentSim",
+    "repo": "#",
+    "demo": "#"
+  }
+];
+
 const Projects = () => {
   const [activeTab, setActiveTab] = useState(0);
   const [projects, setProjects] = useState([]);
@@ -27,13 +78,17 @@ const Projects = () => {
 
   useEffect(() => {
     fetch('http://127.0.0.1:8000/api/projects')
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) throw new Error('Backend unavailable');
+        return res.json();
+      })
       .then(data => {
         setProjects(data);
         setLoading(false);
       })
       .catch(err => {
-        console.error("Failed to fetch projects data:", err);
+        console.warn("Failed to fetch projects data, using fallback static data:", err);
+        setProjects(FALLBACK_PROJECTS);
         setLoading(false);
       });
   }, []);

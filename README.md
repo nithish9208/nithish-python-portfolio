@@ -1,16 +1,45 @@
-# React + Vite
+# Professional Python Developer Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, high-performance developer portfolio built with a **React (Vite)** frontend and a **Python (FastAPI)** backend.
 
-Currently, two official plugins are available:
+## Architecture
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+This project is separated into a clean full-stack architecture:
 
-## React Compiler
+- **`frontend/`**: Contains the React application powered by Vite, utilizing Framer Motion for animations, Tailwind CSS for styling, and Lucide React for iconography.
+- **`backend/`**: Contains the Python FastAPI server, responsible for serving dynamic data (projects, skills, experience) to the frontend and handling API requests like contact form submissions.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Getting Started
 
-## Expanding the ESLint configuration
+### Quick Start (Windows)
+To start both the frontend and backend simultaneously, simply run the included batch script from the root directory:
+```cmd
+run.bat
+```
+This will install any missing Node modules, start the FastAPI server on port 8000, and launch the Vite development server on port 5173.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+To stop the servers, run:
+```cmd
+stop.bat
+```
+
+### Manual Setup
+
+**Backend:**
+```bash
+cd backend
+pip install -r requirements.txt
+uvicorn main:app --reload --port 8000
+```
+
+**Frontend:**
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+## Features
+- **Dynamic Content**: Data is served from a Python backend, making it easy to integrate with a database in the future.
+- **Interactive Simulations**: Real-time component simulations of backend tasks (Attendance System, CSV Data Tool, etc.).
+- **Modern UI**: Dark-themed, glassmorphism UI with smooth micro-animations.
