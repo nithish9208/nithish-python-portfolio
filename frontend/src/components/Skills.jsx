@@ -1,14 +1,26 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
 const Skills = () => {
-  const skills = [
-    { name: "Python", level: 90, color: "bg-cyan-500", icon: "python" },
-    { name: "SQL (PostgreSQL/MySQL)", level: 85, color: "bg-blue-500", icon: "postgresql" },
-    { name: "Pandas & NumPy", level: 80, color: "bg-emerald-500", icon: "pandas" },
-    { name: "Git", level: 75, color: "bg-orange-500", icon: "git" },
-    { name: "Excel Automation", level: 90, color: "bg-green-600", icon: "excel" },
-  ];
+  const [skills, setSkills] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch('http://127.0.0.1:8000/api/skills')
+      .then(res => res.json())
+      .then(data => {
+        setSkills(data);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error("Failed to fetch skills data:", err);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) {
+    return <div className="py-24 text-center text-cyan-400">Loading Skills...</div>;
+  }
 
   return (
     <section id="skills" className="py-24 bg-slate-900/50">

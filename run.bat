@@ -10,10 +10,14 @@ del "%temp%\run_hidden.vbs"
 exit /b
 
 :execute
-:: Check if node_modules exists, if not install
+:: Start Backend
+cd backend
+start /B cmd /c "uvicorn main:app --reload --port 8000"
+cd ..
+
+:: Start Frontend
+cd frontend
 if not exist "node_modules\" (
     call npm install
 )
-
-:: Start the development server and open the browser automatically
 call npm run dev -- --open

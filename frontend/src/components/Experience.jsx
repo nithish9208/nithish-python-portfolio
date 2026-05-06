@@ -1,22 +1,27 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Briefcase, Calendar, CheckCircle2 } from 'lucide-react';
 
 const Experience = () => {
-  const experiences = [
-    {
-      role: "Python & Data Operations Intern",
-      company: "RR IT Solutions",
-      period: "2023 - Present",
-      description: "Spearheading automation initiatives and data pipeline optimization for client datasets.",
-      highlights: [
-        "Developed automation scripts reducing manual data entry by 70%",
-        "Optimized SQL queries for reporting workflows, improving performance by 40%",
-        "Implemented Python-based data cleaning pipelines for messy CSV datasets",
-        "Automated reporting workflows using Pandas and Matplotlib"
-      ]
-    }
-  ];
+  const [experiences, setExperiences] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch('http://127.0.0.1:8000/api/experience')
+      .then(res => res.json())
+      .then(data => {
+        setExperiences(data);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error("Failed to fetch experience data:", err);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) {
+    return <div className="py-24 text-center text-emerald-400">Loading Experience...</div>;
+  }
 
   return (
     <section id="experience" className="py-24 relative overflow-hidden">
